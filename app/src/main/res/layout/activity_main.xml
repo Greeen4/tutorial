@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_dark">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<!--        <ImageView-->
+<!--            android:id="@+id/assasin"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginLeft="0dp"-->
+<!--            android:layout_marginTop="0dp"-->
+<!--            android:src="@drawable/assasin" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/debug"-->
+<!--            android:layout_width="603dp"-->
+<!--            android:layout_height="90dp"-->
+<!--            android:layout_marginLeft="@dimen/cellsize"-->
+<!--            android:layout_marginTop="50dp" />-->
+<!--        <ImageView-->
+<!--            android:id="@+id/ivArrowUp"-->
+<!--            android:layout_width="@dimen/cellsize"-->
+<!--            android:layout_height="@dimen/cellsize"-->
+<!--            android:layout_marginLeft="@dimen/cellsize"-->
+<!--            android:layout_marginTop="260dp"-->
+<!--            android:background="@android:color/white"-->
+<!--            android:src="@drawable/ic_arrow_up" />-->
+<!---->
+<!--        <ImageView-->
+<!--            android:layout_marginTop="260dp"-->
+<!--            android:background="@android:color/white"-->
+<!--            android:id="@+id/ivArrowRight"-->
+<!--            android:layout_width="@dimen/cellsize"-->
+<!--            android:layout_height="@dimen/cellsize"-->
+<!--            android:rotation="90"-->
+<!--            android:src="@drawable/ic_arrow_up" />-->
+<!---->
+<!--        <ImageView-->
+<!--            android:id="@+id/ivArrowBottom"-->
+<!--            android:layout_width="@dimen/cellsize"-->
+<!--            android:layout_height="@dimen/cellsize"-->
+<!--            android:layout_marginLeft="100dp"-->
+<!--            android:layout_marginTop="260dp"-->
+<!--            android:background="@android:color/white"-->
+<!--            android:rotation="180"-->
+<!--            android:src="@drawable/ic_arrow_up" />-->
+<!---->
+<!--        <ImageView-->
+<!--            android:layout_marginLeft="150dp"-->
+<!--            android:layout_marginTop="260dp"-->
+<!--            android:background="@android:color/white"-->
+<!--            android:id="@+id/ivArrowLeft"-->
+<!--            android:layout_width="@dimen/cellsize"-->
+<!--            android:layout_height="@dimen/cellsize"-->
+<!--            android:rotation="270"-->
+<!--            android:src="@drawable/ic_arrow_up" />-->
+<!--        <ImageView-->
+<!--            android:layout_marginLeft="200dp"-->
+<!--            android:layout_marginTop="260dp"-->
+<!--            android:background="@android:color/white"-->
+<!--            android:id="@+id/fire"-->
+<!--            android:layout_width="@dimen/cellsize"-->
+<!--            android:layout_height="@dimen/cellsize"-->
+<!--            android:rotation="270"-->
+<!--            android:src="@drawable/ic_fire" />-->
+<!---->
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/materials_container"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/editor_clear"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_clear" />
+
+        <ImageView
+            android:id="@+id/editor_brick"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/brick" />
+
+        <ImageView
+            android:id="@+id/editor_concrete"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/concrete" />
+
+        <ImageView
+            android:id="@+id/editor_grass"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/grass" />
+<!--        <ImageView-->
+<!--            android:id="@+id/editor_pon4ik"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:src="@drawable/pon4ik" />-->
+<!---->
+<!--        <ImageView-->
+<!--            android:id="@+id/tower"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:src="@drawable/ic_tower" />-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tower_container"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+    <ImageView
+        android:id="@+id/eifel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/eiffel_tower" />
+    </LinearLayout>
+</FrameLayout>
+

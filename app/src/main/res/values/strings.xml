@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TowerDefense</string>
+    <string name="settings">settings</string>
+    <string name="save">save</string>
+    <string name="play">play</string>
+    <string name="tower">tower</string>
+</resources>
