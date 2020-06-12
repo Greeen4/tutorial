@@ -3,7 +3,7 @@ package ru.appngo.towerdefense.models
 
 import android.view.View
 import android.widget.FrameLayout
-import ru.appngo.towerdefense.CELL_SIZE
+import ru.appngo.towerdefense.activities.CELL_SIZE
 import ru.appngo.towerdefense.enums.Direction
 import ru.appngo.towerdefense.utils.checkMoveThrought
 import ru.appngo.towerdefense.utils.getElementByCoordinates

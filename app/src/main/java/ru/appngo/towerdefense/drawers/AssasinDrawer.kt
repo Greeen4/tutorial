@@ -2,8 +2,7 @@ package ru.appngo.towerdefense.drawers
 
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.TextView
-import ru.appngo.towerdefense.CELL_SIZE
+import ru.appngo.towerdefense.activities.CELL_SIZE
 import ru.appngo.towerdefense.enums.Direction
 import ru.appngo.towerdefense.models.Coordinate
 import ru.appngo.towerdefense.models.Element

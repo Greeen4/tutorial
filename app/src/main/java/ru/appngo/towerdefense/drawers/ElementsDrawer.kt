@@ -1,8 +1,7 @@
 package ru.appngo.towerdefense.drawers
 
 import android.widget.FrameLayout
-import android.widget.ImageView
-import ru.appngo.towerdefense.CELL_SIZE
+import ru.appngo.towerdefense.activities.CELL_SIZE
 import ru.appngo.towerdefense.enums.Material
 import ru.appngo.towerdefense.models.Coordinate
 import ru.appngo.towerdefense.models.Element
@@ -55,6 +54,11 @@ class ElementsDrawer(val container: FrameLayout) {
 //        if (currentMaterial.amount == 1)
 //            elementsOnContainer.firstOrNull{it.material == currentMaterial}?.coordinate?.let{eraseView(it)}
 //    }
+
+    fun removeAll(){
+        elementsOnContainer.forEach {container.removeView(container.findViewById(it.viewId))}
+        elementsOnContainer.clear()
+    }
 
     fun removeElement(element: Element?){
         if(element != null){

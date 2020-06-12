@@ -2,7 +2,7 @@ package ru.appngo.towerdefense.drawers
 
 import android.view.View
 import android.widget.FrameLayout
-import ru.appngo.towerdefense.CELL_SIZE
+import ru.appngo.towerdefense.activities.CELL_SIZE
 
 class GridDrawer(private val container: FrameLayout) {
 

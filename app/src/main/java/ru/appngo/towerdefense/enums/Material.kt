@@ -26,6 +26,7 @@ enum class Material(
     ENEMY (false, false, true, 0, ENEMY_SIZE, ENEMY_SIZE, R.drawable.demon),
     ENEMY_2 (false, false, true, 0, ENEMY_SIZE, ENEMY_SIZE, R.drawable.demon_1hp),
     PLAYER(false, false, true, 0, ENEMY_SIZE, ENEMY_SIZE, R.drawable.assasin),
-    EIFEL(false, false, false, 5, STD_SIZE, STD_SIZE, R.drawable.eiffel_tower)
+    EIFEL(false, false, false, 5, STD_SIZE, STD_SIZE, R.drawable.eiffel_tower),
+    LAVA(true, true, false, 5, STD_SIZE, STD_SIZE, R.drawable.lava)
 
 }

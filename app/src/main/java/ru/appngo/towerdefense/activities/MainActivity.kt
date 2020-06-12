@@ -1,8 +1,11 @@
-package ru.appngo.towerdefense
+package ru.appngo.towerdefense.activities
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -11,33 +14,36 @@ import android.view.View.VISIBLE
 import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.appngo.tankstutorial.R
+import ru.appngo.towerdefense.GameCore
+import ru.appngo.towerdefense.LevelStore
+import ru.appngo.towerdefense.ProgressIndicator
 import ru.appngo.towerdefense.drawers.*
-import ru.appngo.towerdefense.enums.Direction
-import ru.appngo.towerdefense.enums.Direction.*
 import ru.appngo.towerdefense.enums.Material
 import ru.appngo.towerdefense.models.Coordinate
 import ru.appngo.towerdefense.models.Element
-import ru.appngo.towerdefense.models.NPC
-import ru.appngo.towerdefense.models.test
+import java.lang.Thread.sleep
 
 const val CELL_SIZE = 50
 const val VERTICAL_CELL_AMOUNT = 48
 const val HORIZONTAL_CELL_AMOUNT = 17
 const val VERTICAL_MAX_SIZE = CELL_SIZE * VERTICAL_CELL_AMOUNT
 const val HORIZONTAL_MAX_SIZE = CELL_SIZE * HORIZONTAL_CELL_AMOUNT
+const val KEY_LEVEL_ONE = "level_one"
+const val KEY_LEVEL_TWO = "level_two"
+const val KEY_LEVEL_Three = "level_three"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ProgressIndicator {
     private var editMode = false
     private var choseTowerMode = false
+    private var levelSaveMode = false
+    private var levelChoseMode = false
     private var isPlaying = false
+    private var gameStarted = false
+    private lateinit  var item: MenuItem
 
-//    private val player = test(
-//        Element(
-//            R.id.assasin,
-//            Material.PLAYER,
-//            Coordinate(0,0)
-//        ), UP
-//    )
+    private val gameCore by lazy{
+    GameCore(this)
+    }
 
     private val pon4ik by lazy {
         Element(
@@ -74,11 +80,11 @@ class MainActivity : AppCompatActivity() {
 
 
     private val enemyDrawer by lazy {
-        EnemyDrawer(container, elementsDrawer.elementsOnContainer, Coordinate(200,200))
+        EnemyDrawer(container, elementsDrawer.elementsOnContainer, Coordinate(200,200), gameCore)
     }
 
     private val bulletDrawer by lazy {
-        BulletDrawer(container, elementsDrawer.elementsOnContainer, enemyDrawer)
+        BulletDrawer(container, elementsDrawer.elementsOnContainer, enemyDrawer, gameCore)
     }
 
     @SuppressLint("SourceLockedOrientationActivity", "ClickableViewAccessibility")
@@ -89,12 +95,29 @@ class MainActivity : AppCompatActivity() {
             VERTICAL_MAX_SIZE,
             HORIZONTAL_MAX_SIZE
         )
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         editor_clear.setOnClickListener { elementsDrawer.currentMaterial = Material.EMPTY }
         editor_brick.setOnClickListener { elementsDrawer.currentMaterial = Material.BRICK }
         editor_concrete.setOnClickListener { elementsDrawer.currentMaterial = Material.CONCRETE }
         editor_grass.setOnClickListener { elementsDrawer.currentMaterial = Material.GRASS }
         eifel.setOnClickListener { elementsDrawer.currentMaterial = Material.EIFEL }
+        lava.setOnClickListener { elementsDrawer.currentMaterial = Material.LAVA }
+        level_1.setOnClickListener{levelStore.saveLevel(elementsDrawer.elementsOnContainer, KEY_LEVEL_ONE)}
+        level_2.setOnClickListener{levelStore.saveLevel(elementsDrawer.elementsOnContainer, KEY_LEVEL_TWO)}
+        level_3.setOnClickListener{levelStore.saveLevel(elementsDrawer.elementsOnContainer, KEY_LEVEL_Three)}
+        chose_level_1.setOnClickListener{
+            elementsDrawer.removeAll()
+            elementsDrawer.drawListElem(levelStore.loadLevel(KEY_LEVEL_ONE))
+        }
+        chose_level_2.setOnClickListener{
+            elementsDrawer.removeAll()
+            elementsDrawer.drawListElem(levelStore.loadLevel(KEY_LEVEL_TWO))
+        }
+        chose_level_3.setOnClickListener{
+            elementsDrawer.removeAll()
+            elementsDrawer.drawListElem(levelStore.loadLevel(KEY_LEVEL_Three))
+        }
 //        editor_pon4ik.setOnClickListener { elementsDrawer.currentMaterial = Material.PON4IK}
 //        ivArrowUp.setOnClickListener {move(UP) }
 //        ivArrowBottom.setOnClickListener {move(BOTTOM) }
@@ -116,36 +139,41 @@ class MainActivity : AppCompatActivity() {
             elementsDrawer.onTouchContainer(event.x, event.y)
             return@setOnTouchListener true
         }
-        elementsDrawer.drawListElem(levelStore.loadLevel())
         elementsDrawer.drawListElem(listOf(pon4ik))
+        showProgress()
 //        elementsDrawer.elementsOnContainer.add(player.element)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.settings, menu)
+        item = menu.findItem(R.id.menu_play)
         return true
     }
 
-    private fun startGame(){
-        if(editMode || choseTowerMode || isPlaying)
-            return
-        enemyDrawer.startEnemy()
-        enemyDrawer.moveEnemy()
-        bulletDrawer.moveAllBullets()
-        isPlaying = true
-    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        removeProgress()
         return when (item.itemId) {
             R.id.menu_settings -> {
                 switchEditMode()
                 true
             }
             R.id.menu_save -> {
-                levelStore.saveLevel(elementsDrawer.elementsOnContainer)
+                saveLevel()
+                true
+            }
+            R.id.menu_chose_level -> {
+                loadLevel()
                 true
             }
             R.id.menu_play -> {
-                startGame()
+                if(editMode || choseTowerMode)
+                    return true
+                gameCore.startOrPause()
+                if(gameCore.isPlay){
+                    startGame()
+                }else{
+                    pauseGame()
+                }
                 true
             }
             R.id.menu_tower ->{
@@ -155,6 +183,53 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun loadLevel() {
+        if (editMode || choseTowerMode || levelSaveMode)
+            return
+        if (levelChoseMode){
+            chose_level_container.visibility = GONE
+        }else{
+            chose_level_container.visibility = VISIBLE
+        }
+        levelChoseMode= !levelChoseMode
+    }
+
+    private fun saveLevel() {
+        if (editMode || choseTowerMode || levelChoseMode)
+            return
+        if (levelSaveMode){
+            save_level_container.visibility = GONE
+        }else{
+            save_level_container.visibility = VISIBLE
+        }
+        levelSaveMode = !levelSaveMode
+    }
+
+
+    private fun startGame(){
+//        showProgress()
+//        sleep(1000)
+//        removeProgress()
+        item.icon = ContextCompat.getDrawable(this, R.drawable.ic_pause)
+        if (gameStarted)
+            return
+        gameStarted = true
+        enemyDrawer.startEnemy()
+        enemyDrawer.moveEnemy()
+        bulletDrawer.moveAllBullets()
+        isPlaying = true
+    }
+
+    private fun pauseGame(){
+        item.icon = ContextCompat.getDrawable(this, R.drawable.ic_play)
+        gameCore.pause()
+    }
+
+//    override fun onPause() {
+//        super.onPause()
+//        pauseGame()
+//    }
 
     private fun choseTower(){
         if (editMode)
@@ -181,6 +256,30 @@ class MainActivity : AppCompatActivity() {
         }
         editMode = !editMode
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
+            recreate()
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    @SuppressLint("ResourceAsColor")
+    override fun showProgress() {
+        container.visibility = GONE
+        main_container.setBackgroundColor(R.color.gray)
+        name_level.visibility = VISIBLE
+
+    }
+
+    @SuppressLint("ResourceAsColor")
+    override fun removeProgress() {
+        container.visibility = VISIBLE
+        main_container.setBackgroundColor(R.color.blue)
+        name_level.visibility = GONE
+
+    }
+
 
 //    private fun move(direction: Direction){
 //        player.move(direction, container, elementsDrawer.elementsOnContainer)

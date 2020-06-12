@@ -4,8 +4,9 @@ import android.app.Activity
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
-import ru.appngo.towerdefense.CELL_SIZE
+import ru.appngo.towerdefense.activities.CELL_SIZE
 import ru.appngo.tankstutorial.R
+import ru.appngo.towerdefense.GameCore
 import ru.appngo.towerdefense.enums.Material
 import ru.appngo.towerdefense.models.Bullet
 import ru.appngo.towerdefense.models.Coordinate
@@ -20,7 +21,8 @@ private const val BULLET_HEIGHT = 10
 class BulletDrawer(
     val container:FrameLayout,
     private val elementsOnContainer: MutableList<Element>,
-    val enemyDrawer: EnemyDrawer
+    private val enemyDrawer: EnemyDrawer,
+    private val gameCore: GameCore
 ) {
 
     private var canBulletGo = true
@@ -59,6 +61,8 @@ class BulletDrawer(
         Thread(Runnable {
             var timeSpawn = 0
             while(true){
+                if(!gameCore.isPlay)
+                    continue
                 if (timeSpawn == 100){
                     addNewBullete()
                     timeSpawn = 0
@@ -106,16 +110,15 @@ class BulletDrawer(
         val activity = container.context as Activity
         activity.runOnUiThread{
             container.removeView(activity.findViewById(element.viewId))
+            container.removeView(activity.findViewById(element.textViewId))
         }
     }
     private fun removeElementAndStopBullet(element: Element?, bullet: Bullet){
         if (element != null){
-            if (element.material.bulletThrough)
-                return
             if(element.material.canDestroy) {
                 bullet.canMove = false
-                element.hp -= 1
-                if(element.hp == 0) {
+                element.hp -= 50
+                if(element.hp <= 0) {
                     removeView(element)
                     if (element.material == Material.ENEMY)
                         removeEnemy(element)
@@ -125,6 +128,8 @@ class BulletDrawer(
             }else{
                 bullet.canMove = false
             }
+            if (element.material.bulletThrough)
+                return
         }
     }
 
@@ -132,6 +137,9 @@ class BulletDrawer(
         val enemyElements = enemyDrawer.enemies.map{it.element} //TODO optimization
         val enemyIndex = enemyElements.indexOf(element)
         enemyDrawer.removeEnemy(enemyIndex)
+        if (enemyDrawer.allEnemiesKilled()){
+            gameCore.win(enemyDrawer.getScore())
+        }
 //        enemyDrawer.addToRemoveEnemiesList(enemyIndex)
 //        enemyDrawer.removeEnemiesOnContainer.add(element)
     }
@@ -191,8 +199,8 @@ class BulletDrawer(
 
     private fun getBulletCoordinates(bullet: ImageView, objFromBullet: Coordinate): Coordinate {
         return Coordinate(
-            objFromBullet.top + CELL_SIZE/2,
-            objFromBullet.left + CELL_SIZE/2
+            objFromBullet.top + CELL_SIZE /2,
+            objFromBullet.left + CELL_SIZE /2
         )
     }
 }

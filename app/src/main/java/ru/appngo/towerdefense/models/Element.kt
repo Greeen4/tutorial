@@ -10,6 +10,7 @@ data class Element constructor (
     var coordinate: Coordinate,
     val width: Int = material.width,
     val height: Int = material. height,
-    var hp: Int = 1
+    var hp: Int = 1,
+    val textViewId:Int = View.generateViewId()
 ){
 }

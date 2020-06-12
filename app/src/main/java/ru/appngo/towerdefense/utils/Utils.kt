@@ -2,12 +2,13 @@ package ru.appngo.towerdefense.utils
 
 import android.app.Activity
 import android.view.View
-import android.widget.ActionMenuView
 import android.widget.FrameLayout
 import android.widget.ImageView
-import ru.appngo.towerdefense.CELL_SIZE
-import ru.appngo.towerdefense.HORIZONTAL_MAX_SIZE
-import ru.appngo.towerdefense.VERTICAL_MAX_SIZE
+import android.widget.TextView
+import ru.appngo.towerdefense.activities.CELL_SIZE
+import ru.appngo.towerdefense.activities.HORIZONTAL_MAX_SIZE
+import ru.appngo.towerdefense.activities.VERTICAL_MAX_SIZE
+import ru.appngo.towerdefense.enums.Material
 import ru.appngo.towerdefense.models.Coordinate
 import ru.appngo.towerdefense.models.Element
 
@@ -49,6 +50,20 @@ fun getElementByCoordinates(coordinate: Coordinate, elementsOnContainer: List<El
 
 
 fun Element.drawElement(container: FrameLayout) {
+    var textView:TextView? = null
+    if (this.material == Material.ENEMY){
+        textView = TextView(container.context)
+        val layoutParams = FrameLayout.LayoutParams(
+            this.material.width * CELL_SIZE,
+            this.material.height * CELL_SIZE
+        )
+
+        layoutParams.topMargin = this.coordinate.top - CELL_SIZE
+        layoutParams.leftMargin = this.coordinate.left + CELL_SIZE/2
+        textView.id = this.textViewId
+        textView.layoutParams = layoutParams
+        textView.text = this.hp.toString()
+    }
     val view = ImageView(container.context)
     val layoutParams = FrameLayout.LayoutParams(
         this.material.width * CELL_SIZE,
@@ -63,6 +78,8 @@ fun Element.drawElement(container: FrameLayout) {
     view.scaleType = ImageView.ScaleType.FIT_XY
     container.runOnUiThread{
         container.addView(view)
+        if(textView != null)
+            container.addView(textView)
     }
 }
 

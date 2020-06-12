@@ -7,6 +7,11 @@
         android:title="@string/save"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/menu_chose_level"
+        android:icon="@drawable/ic_chose_level"
+        android:title="@string/save"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/menu_play"
         android:icon="@drawable/ic_play"
         android:title="@string/play"
