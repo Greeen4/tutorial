@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
             HORIZONTAL_MAX_SIZE
         )
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         editor_clear.setOnClickListener { elementsDrawer.currentMaterial = Material.EMPTY }
         editor_brick.setOnClickListener { elementsDrawer.currentMaterial = Material.BRICK }
         editor_concrete.setOnClickListener { elementsDrawer.currentMaterial = Material.CONCRETE }

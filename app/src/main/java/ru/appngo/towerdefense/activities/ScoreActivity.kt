@@ -3,6 +3,7 @@ package ru.appngo.towerdefense.activities
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_score.*
@@ -26,6 +27,7 @@ class ScoreActivity: AppCompatActivity() {
     var score = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_score)
         score = intent.getIntExtra(EXTRA_SCORE, 0)

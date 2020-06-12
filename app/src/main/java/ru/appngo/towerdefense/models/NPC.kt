@@ -35,8 +35,9 @@ class NPC(
         } else {
             element.coordinate = saveCoordinate
             (view.layoutParams as FrameLayout.LayoutParams).topMargin = saveCoordinate.top
-            (textView.layoutParams as FrameLayout.LayoutParams).topMargin = saveCoordinate.top
-            (textView.layoutParams as FrameLayout.LayoutParams).leftMargin = saveCoordinate.left
+            (view.layoutParams as FrameLayout.LayoutParams).leftMargin = saveCoordinate.left
+            (textView.layoutParams as FrameLayout.LayoutParams).topMargin = saveCoordinate.top - CELL_SIZE
+            (textView.layoutParams as FrameLayout.LayoutParams).leftMargin = saveCoordinate.left + CELL_SIZE/2
         }
     }
 
