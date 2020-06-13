@@ -10,7 +10,7 @@ const val ENEMY_SIZE = 2
 const val STD_SIZE= 1
 
 enum class Material(
-    val tankCanGoThrough: Boolean,
+    val CanGoThrough: Boolean,
     val bulletThrough: Boolean,
     val canDestroy: Boolean,
     val amount: Int,

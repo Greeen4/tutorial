@@ -9,6 +9,8 @@ import ru.appngo.towerdefense.utils.checkMoveThrought
 import ru.appngo.towerdefense.utils.getElementByCoordinates
 import ru.appngo.towerdefense.utils.runOnUiThread
 
+//not used
+
 class test(
     val element: Element,
     var direction: Direction
@@ -71,7 +73,7 @@ class test(
     ): Boolean {
         for (npcCoord in getCoordinates(coordinate)){
             val element = getElementByCoordinates(npcCoord, elementsOnContainer)
-            if (element != null && !element.material.tankCanGoThrough) {
+            if (element != null && !element.material.CanGoThrough) {
                 if(this == element) {
                     continue
                 }

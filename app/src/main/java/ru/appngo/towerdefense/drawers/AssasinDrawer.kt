@@ -9,6 +9,9 @@ import ru.appngo.towerdefense.models.Element
 import ru.appngo.towerdefense.utils.checkMoveThrought
 import ru.appngo.towerdefense.utils.getElementByCoordinates
 
+
+//not used
+
 class AssasinDrawer(val container: FrameLayout) {
 
 //
@@ -107,7 +110,7 @@ class AssasinDrawer(val container: FrameLayout) {
     private fun checkTankCanMoveThroughMaterial(coordinate: Coordinate, elementsOnContainer:List<Element>): Boolean {
         getTankCoordinates(coordinate).forEach {
             val element = getElementByCoordinates(it, elementsOnContainer)
-            if (element != null && !element.material.tankCanGoThrough) {
+            if (element != null && !element.material.CanGoThrough) {
                 return false
             }
         }

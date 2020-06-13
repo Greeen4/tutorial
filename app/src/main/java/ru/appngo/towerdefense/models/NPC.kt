@@ -69,7 +69,7 @@ class NPC(
                 this.hp -= 1
                 continue
             }
-            if (findElement != null && !findElement.material.tankCanGoThrough) {
+            if (findElement != null && !findElement.material.CanGoThrough) {
                 if(this == findElement) {
                     continue
                 }
