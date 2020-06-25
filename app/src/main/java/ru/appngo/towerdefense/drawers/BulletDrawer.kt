@@ -18,6 +18,7 @@ import kotlin.math.sqrt
 
 private const val BULLETE_WIDTH = 10
 private const val BULLET_HEIGHT = 10
+private const val BULLETE_DAMAGE = 20
 
 class BulletDrawer(
     val container:FrameLayout,
@@ -25,11 +26,7 @@ class BulletDrawer(
     private val enemyDrawer: EnemyDrawer,
     private val gameCore: GameCore
 ) {
-
-//    private var canBulletGo = true
-//    private var bulletThread: Thread? = null
     private val allBullet = mutableListOf<Bullet>()
-
 
 
     fun addNewBullete(/*origin:Coordinate*/){
@@ -128,7 +125,7 @@ class BulletDrawer(
         if (element != null){
             if(element.material.canDestroy) {
                 bullet.canMove = false
-                element.hp -= 50
+                element.hp -= BULLETE_DAMAGE
                 if(element.hp <= 0) {
                     removeView(element)
                     if (element.material == Material.ENEMY)
