@@ -85,6 +85,11 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
         BulletDrawer(container, elementsDrawer.elementsOnContainer, enemyDrawer, gameCore)
     }
 
+    private fun loadUnsaveLevel(){
+        if (elementsDrawer.elementsOnContainer.isEmpty())
+            elementsDrawer.drawListElem(listOf(pon4ik))
+    }
+
     @SuppressLint("SourceLockedOrientationActivity", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,14 +112,17 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
         chose_level_1.setOnClickListener{
             elementsDrawer.removeAll()
             elementsDrawer.drawListElem(levelStore.loadLevel(KEY_LEVEL_ONE))
+            loadUnsaveLevel()
         }
         chose_level_2.setOnClickListener{
             elementsDrawer.removeAll()
             elementsDrawer.drawListElem(levelStore.loadLevel(KEY_LEVEL_TWO))
+            loadUnsaveLevel()
         }
         chose_level_3.setOnClickListener{
             elementsDrawer.removeAll()
             elementsDrawer.drawListElem(levelStore.loadLevel(KEY_LEVEL_Three))
+            loadUnsaveLevel()
         }
         container.setOnTouchListener { _, event ->
             if (!editMode && !choseTowerMode)
