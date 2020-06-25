@@ -11,6 +11,7 @@ import ru.appngo.towerdefense.enums.Material
 import ru.appngo.towerdefense.models.Bullet
 import ru.appngo.towerdefense.models.Coordinate
 import ru.appngo.towerdefense.models.Element
+import ru.appngo.towerdefense.utils.calculateStepToMove
 import ru.appngo.towerdefense.utils.checkMoveThrought
 import ru.appngo.towerdefense.utils.runOnUiThread
 import kotlin.math.sqrt
@@ -25,8 +26,8 @@ class BulletDrawer(
     private val gameCore: GameCore
 ) {
 
-    private var canBulletGo = true
-    private var bulletThread: Thread? = null
+//    private var canBulletGo = true
+//    private var bulletThread: Thread? = null
     private val allBullet = mutableListOf<Bullet>()
 
 
@@ -37,25 +38,35 @@ class BulletDrawer(
             return
         var direction:Coordinate = Coordinate(0,0)
         if (!enemyDrawer.enemies.isEmpty())
-            direction = enemyDrawer.enemies[0].element.coordinate
+            direction = calculateDirectionToEnemies()//enemyDrawer.enemies[0].element.coordinate
         originBulletsList.forEach {
-            val y1 = it.coordinate.top.toDouble()
-            val x1 = it.coordinate.left.toDouble()
-            val x2 = direction.left.toDouble()
-            val y2 = direction.top.toDouble()
-            var dy = (y2 - y1) / (sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1)))
-            var dx = (x2 - x1) / (sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1)))
+            val coord = calculateStepToMove(it.coordinate, direction)
             allBullet.add(
                 Bullet(
                     createBullet(it.coordinate),
                     it.coordinate,
                     direction,
-                    (dx * 10).toInt(),
-                    (dy * 10).toInt()
+                    coord.top,
+                    coord.left
                 )
             )
         }
     }
+
+    private fun calculateDirectionToEnemies(): Coordinate {
+        var direction = enemyDrawer.enemies[0].element.coordinate
+        return Coordinate(direction.top - CELL_SIZE/2, direction.left + CELL_SIZE/2)
+    }
+
+//    private fun offsetToTatger(origin: Coordinate, direction: Coordinate ): Pair<Int, Int> {
+//        val y1 = origin.top.toDouble()
+//        val x1 = origin.left.toDouble()
+//        val x2 = direction.left.toDouble()
+//        val y2 = direction.top.toDouble()
+//        var dy = (y2 - y1) / (sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1)))
+//        var dx = (x2 - x1) / (sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1)))
+//        return (dx*10).toInt() to (dy*10).toInt()
+//    }
 
     fun moveAllBullets() {
         Thread(Runnable {
@@ -152,7 +163,7 @@ class BulletDrawer(
             intersectElement = compareWithEnemies(bulleteCoordinate)
         }
         if(intersectElement == null || intersectElement.coordinate == bullet.origin
-            || intersectElement.material == Material.EIFEL)
+            || intersectElement.material.CanGoThrough)
             return
         removeElementAndStopBullet(intersectElement, bullet)
     }

@@ -11,6 +11,7 @@ import ru.appngo.towerdefense.activities.VERTICAL_MAX_SIZE
 import ru.appngo.towerdefense.enums.Material
 import ru.appngo.towerdefense.models.Coordinate
 import ru.appngo.towerdefense.models.Element
+import kotlin.math.sqrt
 
 
 fun View.getCoordinateNow():Coordinate {
@@ -29,6 +30,16 @@ fun View.checkMoveThrought(coordinate: Coordinate): Boolean {
         return true
     }
     return false
+}
+
+fun calculateStepToMove(origin: Coordinate, target: Coordinate): Coordinate {
+    val y1 = origin.top.toDouble()
+    val x1 = origin.left.toDouble()
+    val x2 = target.left.toDouble()
+    val y2 = target.top.toDouble()
+    var dy = (y2 - y1) / (sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1)))
+    var dx = (x2 - x1) / (sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1)))
+    return Coordinate((dx*10).toInt(), (dy*10).toInt())
 }
 
 fun getElementByCoordinates(coordinate: Coordinate, elementsOnContainer: List<Element>): Element? {

@@ -49,9 +49,7 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
         Element(
             material = Material.PON4IK,
             coordinate = Coordinate(
-                300, 1500 //TODO !!!!!
-//                container.layoutParams.height - Material.PON4IK.height * CELL_SIZE,
-//                container.layoutParams.width - Material.PON4IK.width * CELL_SIZE / 2
+                300, 1500 //Change later
             )
         )
     }
@@ -118,21 +116,6 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
             elementsDrawer.removeAll()
             elementsDrawer.drawListElem(levelStore.loadLevel(KEY_LEVEL_Three))
         }
-//        editor_pon4ik.setOnClickListener { elementsDrawer.currentMaterial = Material.PON4IK}
-//        ivArrowUp.setOnClickListener {move(UP) }
-//        ivArrowBottom.setOnClickListener {move(BOTTOM) }
-//        ivArrowLeft.setOnClickListener {move(LEFT) }
-//        ivArrowRight.setOnClickListener {move(RIGHT) }
-//        ivArrowRight.setOnClickListener {assasinDrawer.move(assasin   RIGHT) }
-//        ivArrowRight.setOnClickListener {move(RIGHT) }
-//        ivArrowRight.setOnClickListener {move(RIGHT) }
-//        ivArrowRight.setOnClickListener {move(RIGHT) }
-//    fire.setOnClickListener {bulletDrawer.addNewBullete(/*player.element.coordinate*/)}//.moveBullet(
-            /*Coordinate(
-                player.element.coordinate.top,
-                player.element.coordinate.left
-            //)*///player.element, Coordinate(200, 200),  debug)}
-
         container.setOnTouchListener { _, event ->
             if (!editMode && !choseTowerMode)
                 return@setOnTouchListener true
@@ -141,7 +124,24 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
         }
         elementsDrawer.drawListElem(listOf(pon4ik))
         showProgress()
-//        elementsDrawer.elementsOnContainer.add(player.element)
+
+        /* personage for player
+        editor_pon4ik.setOnClickListener { elementsDrawer.currentMaterial = Material.PON4IK}
+        ivArrowUp.setOnClickListener {move(UP) }
+        ivArrowBottom.setOnClickListener {move(BOTTOM) }
+        ivArrowLeft.setOnClickListener {move(LEFT) }
+        ivArrowRight.setOnClickListener {move(RIGHT) }
+        ivArrowRight.setOnClickListener {assasinDrawer.move(assasin   RIGHT) }
+        ivArrowRight.setOnClickListener {move(RIGHT) }
+        ivArrowRight.setOnClickListener {move(RIGHT) }
+        ivArrowRight.setOnClickListener {move(RIGHT) }
+        fire.setOnClickListener {bulletDrawer.addNewBullete(/*player.element.coordinate*/)}//.moveBullet(
+        Coordinate(
+            player.element.coordinate.top,
+            player.element.coordinate.left
+        )player.element, Coordinate(200, 200),  debug)}
+         */
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -166,14 +166,7 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
                 true
             }
             R.id.menu_play -> {
-                if(editMode || choseTowerMode)
-                    return true
-                gameCore.startOrPause()
-                if(gameCore.isPlay){
-                    startGame()
-                }else{
-                    pauseGame()
-                }
+                play()
                 true
             }
             R.id.menu_tower ->{
@@ -181,6 +174,17 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun play(){
+        if(editMode || choseTowerMode)
+            return
+        gameCore.startOrPause()
+        if(gameCore.isPlay){
+            startGame()
+        }else{
+            pauseGame()
         }
     }
 
@@ -208,9 +212,6 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
 
 
     private fun startGame(){
-//        showProgress()
-//        sleep(1000)
-//        removeProgress()
         item.icon = ContextCompat.getDrawable(this, R.drawable.ic_pause)
         if (gameStarted)
             return
@@ -225,7 +226,7 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
         item.icon = ContextCompat.getDrawable(this, R.drawable.ic_play)
         gameCore.pause()
     }
-
+//    exception ?
 //    override fun onPause() {
 //        super.onPause()
 //        pauseGame()
@@ -279,18 +280,4 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
         name_level.visibility = GONE
 
     }
-
-
-//    private fun move(direction: Direction){
-//        player.move(direction, container, elementsDrawer.elementsOnContainer)
-//    }
-//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-//        when (keyCode) {
-//            KEYCODE_DPAD_UP -> elementsDrawer.move(myTank, UP)
-//            KEYCODE_DPAD_LEFT -> elementsDrawer.move(myTank, LEFT)
-//            KEYCODE_DPAD_DOWN -> elementsDrawer.move(myTank, BOTTOM)
-//            KEYCODE_DPAD_RIGHT -> elementsDrawer.move(myTank, RIGHT)
-//        }
-//        return super.onKeyDown(keyCode, event)
-//    }
 }

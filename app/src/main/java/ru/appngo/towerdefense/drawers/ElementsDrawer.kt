@@ -33,6 +33,8 @@ class ElementsDrawer(val container: FrameLayout) {
             createElementDrawView(coordinate)
             return
         }
+        if (viewOnCoordinate.material == Material.PON4IK)
+            return
         if (viewOnCoordinate.material != currentMaterial) {
             replaceView(coordinate)
         }
@@ -45,6 +47,9 @@ class ElementsDrawer(val container: FrameLayout) {
 
 
     private fun eraseView(coordinate: Coordinate) {
+        val removedElem = getElementByCoordinates(coordinate, elementsOnContainer)
+        if (removedElem != null && removedElem.material == Material.PON4IK)
+            return
         removeElement(getElementByCoordinates(coordinate, elementsOnContainer))
         for (element in getElementsUnderCurrent(coordinate))
             removeElement(element)

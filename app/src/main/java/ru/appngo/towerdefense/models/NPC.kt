@@ -25,8 +25,8 @@ class NPC(
         val view = container.findViewById<View>(element.viewId) ?: return
         val textView = container.findViewById<TextView>(element.textViewId)
         val saveCoordinate = view.getCoordinateNow()
-        val nextCoordinate = getNextCoordinate(dx, dy, view)
-        getNextTextCoordinate(dx, dy, textView)
+        val nextCoordinate = getNextCoordinate(dx, dy, view, textView)
+//        getNextTextCoordinate(dx, dy, textView)
         if (view.checkMoveThrought(nextCoordinate)
             && element.checkCanMoveThroughMaterial(nextCoordinate, elementsOnContainer, container, gameCore, score)
         ) {
@@ -36,24 +36,55 @@ class NPC(
             element.coordinate = saveCoordinate
             (view.layoutParams as FrameLayout.LayoutParams).topMargin = saveCoordinate.top
             (view.layoutParams as FrameLayout.LayoutParams).leftMargin = saveCoordinate.left
-            (textView.layoutParams as FrameLayout.LayoutParams).topMargin = saveCoordinate.top - CELL_SIZE
-            (textView.layoutParams as FrameLayout.LayoutParams).leftMargin = saveCoordinate.left + CELL_SIZE/2
+            (textView.layoutParams as FrameLayout.LayoutParams).topMargin = saveCoordinate.top
+            (textView.layoutParams as FrameLayout.LayoutParams).leftMargin = saveCoordinate.left
+//            val offsetCoord = Coordinate(saveCoordinate.top - CELL_SIZE, saveCoordinate.left)
+//            if (view.checkMoveThrought(offsetCoord)
+//                && element.checkCanMoveThroughMaterial(offsetCoord, elementsOnContainer, container, gameCore, score)) {
+//                element.coordinate = offsetCoord
+//                (view.layoutParams as FrameLayout.LayoutParams).topMargin = offsetCoord.top
+//                (view.layoutParams as FrameLayout.LayoutParams).leftMargin = offsetCoord.left
+//                (textView.layoutParams as FrameLayout.LayoutParams).topMargin = offsetCoord.top - CELL_SIZE
+//                (textView.layoutParams as FrameLayout.LayoutParams).leftMargin = offsetCoord.left + CELL_SIZE / 2
+//            }else{
+//                val offsetCoord = Coordinate(saveCoordinate.top + CELL_SIZE, saveCoordinate.left)
+//                if (view.checkMoveThrought(offsetCoord)
+//                    && element.checkCanMoveThroughMaterial(
+//                        offsetCoord,
+//                        elementsOnContainer,
+//                        container,
+//                        gameCore,
+//                        score
+//                    )
+//                ) {
+//                    element.coordinate = offsetCoord
+//                    (view.layoutParams as FrameLayout.LayoutParams).topMargin = offsetCoord.top
+//                    (view.layoutParams as FrameLayout.LayoutParams).leftMargin = offsetCoord.left
+//                    (textView.layoutParams as FrameLayout.LayoutParams).topMargin =
+//                        offsetCoord.top - CELL_SIZE
+//                    (textView.layoutParams as FrameLayout.LayoutParams).leftMargin =
+//                        offsetCoord.left + CELL_SIZE / 2
+//                }
+//            }
+//        }
         }
     }
 
 
-    private fun getNextCoordinate(dx:Int, dy:Int, view:View):Coordinate {
+    private fun getNextCoordinate(dx:Int, dy:Int, view:View, textView: TextView):Coordinate {
         val layoutParams = view.layoutParams as FrameLayout.LayoutParams
         (view.layoutParams as FrameLayout.LayoutParams).topMargin += dy
         (view.layoutParams as FrameLayout.LayoutParams).leftMargin += dx
+        (textView.layoutParams as FrameLayout.LayoutParams).topMargin += dy
+        (textView.layoutParams as FrameLayout.LayoutParams).leftMargin += dx
         return Coordinate(layoutParams.topMargin, layoutParams.leftMargin)
     }
 
-    private fun getNextTextCoordinate(dx:Int, dy:Int, textView:TextView) {
-        val layoutParams = textView.layoutParams as FrameLayout.LayoutParams
-        (textView.layoutParams as FrameLayout.LayoutParams).topMargin += dy
-        (textView.layoutParams as FrameLayout.LayoutParams).leftMargin += dx
-    }
+//    private fun getNextTextCoordinate(dx:Int, dy:Int, textView:TextView) {
+//        val layoutParams = textView.layoutParams as FrameLayout.LayoutParams
+//        (textView.layoutParams as FrameLayout.LayoutParams).topMargin += dy
+//        (textView.layoutParams as FrameLayout.LayoutParams).leftMargin += dx
+//    }
 
 
     private fun Element.checkCanMoveThroughMaterial(
