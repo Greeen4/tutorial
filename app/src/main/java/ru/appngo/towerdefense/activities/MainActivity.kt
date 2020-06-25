@@ -106,9 +106,18 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
         editor_grass.setOnClickListener { elementsDrawer.currentMaterial = Material.GRASS }
         eifel.setOnClickListener { elementsDrawer.currentMaterial = Material.EIFEL }
         lava.setOnClickListener { elementsDrawer.currentMaterial = Material.LAVA }
-        level_1.setOnClickListener{levelStore.saveLevel(elementsDrawer.elementsOnContainer, KEY_LEVEL_ONE)}
-        level_2.setOnClickListener{levelStore.saveLevel(elementsDrawer.elementsOnContainer, KEY_LEVEL_TWO)}
-        level_3.setOnClickListener{levelStore.saveLevel(elementsDrawer.elementsOnContainer, KEY_LEVEL_Three)}
+        level_1.setOnClickListener{
+            showSaveLevel(1)
+            levelStore.saveLevel(elementsDrawer.elementsOnContainer, KEY_LEVEL_ONE)
+        }
+        level_2.setOnClickListener{
+            showSaveLevel(2)
+            levelStore.saveLevel(elementsDrawer.elementsOnContainer, KEY_LEVEL_TWO)
+        }
+        level_3.setOnClickListener{
+            showSaveLevel(3)
+            levelStore.saveLevel(elementsDrawer.elementsOnContainer, KEY_LEVEL_Three)
+        }
         chose_level_1.setOnClickListener{
             elementsDrawer.removeAll()
             elementsDrawer.drawListElem(levelStore.loadLevel(KEY_LEVEL_ONE))
@@ -215,6 +224,8 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
         }else{
             save_level_container.visibility = VISIBLE
         }
+        if (levelSaveMode)
+            level_save.visibility = GONE
         levelSaveMode = !levelSaveMode
     }
 
@@ -278,7 +289,13 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
         container.visibility = GONE
         main_container.setBackgroundColor(R.color.gray)
         name_level.visibility = VISIBLE
+    }
 
+    private fun showSaveLevel(number_level: Int) {
+        level_save.text = "Level " + number_level.toString() + " was saved!"
+        level_save.visibility = VISIBLE
+//        sleep(10000)
+//        level_save.visibility = GONE
     }
 
     @SuppressLint("ResourceAsColor")

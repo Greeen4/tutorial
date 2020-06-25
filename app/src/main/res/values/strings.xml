@@ -6,4 +6,5 @@
     <string name="tower">tower</string>
     <string name="game_over">GAME \nOVER</string>
     <string name="level_1">LEVEL 1</string>
+    <string name="level_was_saved">Level was saved !</string>
 </resources>
