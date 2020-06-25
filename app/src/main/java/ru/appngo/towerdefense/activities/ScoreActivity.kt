@@ -27,10 +27,10 @@ class ScoreActivity: AppCompatActivity() {
     var score = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_score)
         score = intent.getIntExtra(EXTRA_SCORE, 0)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         back.setOnClickListener{
             setResult(Activity.RESULT_OK)
             finish()

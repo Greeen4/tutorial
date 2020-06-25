@@ -22,6 +22,12 @@
 <!--        android:title="@string/tower"-->
 <!--        app:showAsAction="ifRoom" />-->
 <!---->
+
+    <item
+        android:id="@+id/menu_refresh"
+        android:icon="@drawable/ic_refresh"
+        android:title="@string/refresh"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_settings"
         android:icon="@drawable/ic_edit"

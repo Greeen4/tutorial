@@ -17,11 +17,13 @@ import ru.appngo.tankstutorial.R
 import ru.appngo.towerdefense.GameCore
 import ru.appngo.towerdefense.LevelStore
 import ru.appngo.towerdefense.ProgressIndicator
-import ru.appngo.towerdefense.drawers.*
+import ru.appngo.towerdefense.drawers.BulletDrawer
+import ru.appngo.towerdefense.drawers.ElementsDrawer
+import ru.appngo.towerdefense.drawers.EnemyDrawer
+import ru.appngo.towerdefense.drawers.GridDrawer
 import ru.appngo.towerdefense.enums.Material
 import ru.appngo.towerdefense.models.Coordinate
 import ru.appngo.towerdefense.models.Element
-import java.lang.Thread.sleep
 
 const val CELL_SIZE = 50
 const val VERTICAL_CELL_AMOUNT = 48
@@ -60,6 +62,9 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
 
     private val elementsDrawer by lazy {
         ElementsDrawer(container)
+    }
+
+    override fun onBackPressed() {
     }
 
 //    private val bulletDrawer by lazy {
@@ -186,8 +191,14 @@ class MainActivity : AppCompatActivity(), ProgressIndicator {
                 play()
                 true
             }
-            R.id.menu_tower ->{
+            R.id.menu_tower -> {
                 choseTower()
+                true
+            }
+            R.id.menu_refresh -> {
+                val i = Intent(this, this.javaClass)
+                finish()
+                this.startActivity(i)
                 true
             }
             else -> super.onOptionsItemSelected(item)
