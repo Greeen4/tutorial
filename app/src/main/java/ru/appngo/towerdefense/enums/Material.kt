@@ -16,15 +16,37 @@ enum class Material(
     val amount: Int,
     val width:Int,
     val height:Int,
-    val image:Int
+    val image:Int,
+    val enemy: Boolean = false,
+    val hp:Int = 1
 ) {
     EMPTY(true, true, true, 0, 0, 0, 0),
     BRICK(false, false, true, 0, STD_SIZE, STD_SIZE, R.drawable.brick),
     CONCRETE(false, false, false, 0, STD_SIZE, STD_SIZE, R.drawable.concrete),
     GRASS(true, true, false, 0, STD_SIZE, STD_SIZE, R.drawable.grass),
     PON4IK (false, true, false, 1, PON4IK_WIDTH, PON4IK_HEIGHT, R.drawable.pon4ik),
-    ENEMY (false, false, true, 0, ENEMY_SIZE, ENEMY_SIZE, R.drawable.demon),
-    ENEMY_2 (false, false, true, 0, ENEMY_SIZE, ENEMY_SIZE, R.drawable.demon_1hp),
+    ENEMY (
+        false,
+        false,
+        true,
+        0,
+        ENEMY_SIZE,
+        ENEMY_SIZE,
+        R.drawable.demon,
+        true,
+        70
+    ),
+    ENEMY_2 (
+        false,
+        false,
+        true,
+        0,
+        ENEMY_SIZE,
+        ENEMY_SIZE,
+        R.drawable.demon_1hp,
+        true,
+        100
+    ),
     PLAYER(false, false, true, 0, ENEMY_SIZE, ENEMY_SIZE, R.drawable.assasin),
     EIFEL(false, false, false, 5, STD_SIZE, STD_SIZE, R.drawable.eiffel_tower),
     LAVA(true, true, false, 10, STD_SIZE, STD_SIZE, R.drawable.lava)

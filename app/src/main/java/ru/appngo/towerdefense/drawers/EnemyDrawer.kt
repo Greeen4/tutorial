@@ -26,6 +26,7 @@ class EnemyDrawer(
     private  val respawn:Coordinate = Coordinate(0,0)
     private var amount = 0
     private var killedEnemy = 0
+    private var random_enemies = true
     private lateinit var offset: Coordinate
 
 
@@ -42,11 +43,25 @@ class EnemyDrawer(
     }
 
     private fun drawEnemy(){
-        val enemy = NPC(Element(
-            material = Material.ENEMY,
-            coordinate = respawn,
-            hp = HP_ENEMY
-        ))
+        var enemy:NPC
+        if (random_enemies) {
+            enemy = NPC(
+                Element(
+                    material = Material.ENEMY,
+                    coordinate = respawn
+//                    hp = HP_ENEMY
+                )
+            )
+        }else{
+            enemy = NPC(
+                Element(
+                    material = Material.ENEMY_2,
+                    coordinate = respawn
+//                    hp = HP_ENEMY
+                )
+            )
+        }
+        random_enemies = !random_enemies
         enemy.element.drawElement(container)
         enemies.add(enemy)
     }

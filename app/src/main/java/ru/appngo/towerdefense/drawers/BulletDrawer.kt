@@ -128,7 +128,7 @@ class BulletDrawer(
                 element.hp -= BULLETE_DAMAGE
                 if(element.hp <= 0) {
                     removeView(element)
-                    if (element.material == Material.ENEMY)
+                    if (element.material.enemy)//material == Material.ENEMY)
                         removeEnemy(element)
                     else
                         elementsOnContainer.remove(element)

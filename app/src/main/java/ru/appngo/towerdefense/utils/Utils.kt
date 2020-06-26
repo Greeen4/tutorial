@@ -62,7 +62,7 @@ fun getElementByCoordinates(coordinate: Coordinate, elementsOnContainer: List<El
 
 fun Element.drawElement(container: FrameLayout) {
     var textView:TextView? = null
-    if (this.material == Material.ENEMY){
+    if (this.material.enemy){
         textView = TextView(container.context)
         val layoutParams = FrameLayout.LayoutParams(
             this.material.width * CELL_SIZE,
